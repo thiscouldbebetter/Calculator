@@ -1,0 +1,115 @@
+<html>
+
+<head>
+<style>
+	td { width: 64px; }
+	button { width: 100%; }
+	input { width: 100%; }
+</style>
+</head>
+
+<body>
+
+<div id="divUI" >
+
+	<input id="inputMemory" style="display:none" />
+	
+	<table style="border:1px solid">
+		<tr>
+			<td colspan="4"><input id="inputDisplay" style="text-align: right" disabled="true" /></td>
+		</tr>
+		<tr>
+			<td><button onclick='clearDisplay();'>Clear</button></td>
+			<td><button onclick='record();'>Record</button></td>
+			<td><button onclick='recall();'>Recall</button></td>
+			<td><button onclick='append(" ^ ");'>^</button></td>
+		</tr>
+		<tr>
+			<td><button onclick='prependAndAppend("1 / (", ")");'>1/x</button></td>
+			<td><button onclick='append(" / ");'>/</button></td>
+			<td><button onclick='append("(");'>(</button></td>
+			<td><button onclick='append(")")'>)</button></td>
+		</tr>
+		<tr>
+			<td><button onclick='append("7");';>7</button></td>
+			<td><button onclick='append("8");'>8</button></td>
+			<td><button onclick='append("9");'>9</button></td>
+			<td><button onclick='append(" * ");'>*</button></td>
+		</tr>
+		<tr>
+			<td><button onclick='append("4");'>4</button></td>
+			<td><button onclick='append("5");'>5</button></td>
+			<td><button onclick='append("6");'>6</button></td>
+			<td><button onclick='append(" - ");'>-</button></td>
+		</tr>
+		<tr>
+			<td><button onclick='append("1");'>1</button></td>
+			<td><button onclick='append("2");'>2</button></td>
+			<td><button onclick='append("3");'>3</button></td>
+			<td><button onclick='append(" + ");'>+</button></td>
+		</tr>
+		<tr>
+			<td><button onclick='prependAndAppend("0 - (", ")");'>-x</button></td>
+			<td><button onclick='append("0");'>0</button></td>
+			<td><button onclick='append(".");'>.</button></td>
+			<td><button onclick='result();'>=</button></td>
+		</tr>
+	</table>
+
+</div>
+
+<script type="text/javascript">
+
+function append(stringToAppend)
+{
+		var inputDisplay = document.getElementById("inputDisplay");
+		inputDisplay.value += stringToAppend;
+}
+
+function clearDisplay()
+{
+		var inputDisplay = document.getElementById("inputDisplay");
+		inputDisplay.value = "";
+}
+
+function recall()
+{
+		var d = document;
+		var inputDisplay = d.getElementById("inputDisplay");
+		var inputMemory = d.getElementById("inputMemory");
+		inputDisplay.value += inputMemory.value;
+}
+
+function record()
+{
+		var d = document;
+		var inputDisplay = d.getElementById("inputDisplay");
+		var inputMemory = d.getElementById("inputMemory");
+		inputMemory.value = inputDisplay.value;
+}
+
+function prepend(stringToPrepend)
+{
+		var inputDisplay = document.getElementById("inputDisplay");
+		inputDisplay.value = stringToPrepend + inputDisplay.value;
+}
+
+function prependAndAppend(stringToPrepend, stringToAppend)
+{
+	prepend(stringToPrepend);
+	append(stringToAppend);
+}
+
+function result()
+{
+		var inputDisplay = document.getElementById("inputDisplay");
+		var valueCurrent = inputDisplay.value;
+		valueCurrent = valueCurrent.replace(/\^/g, "**");
+		valueCurrent = eval(valueCurrent);
+		inputDisplay.value = valueCurrent;
+}
+
+</script>
+
+</body>
+</html>
